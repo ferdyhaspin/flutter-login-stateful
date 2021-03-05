@@ -1,6 +1,7 @@
 // Created by ferdyhaspin on 06/03/21.
 
 import 'package:flutter/material.dart';
+import 'package:login_stateful/src/mixins/validation_mixin.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -9,9 +10,10 @@ class LoginScreen extends StatefulWidget {
   }
 }
 
-class LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> with ValidationMixin {
   final formKey = GlobalKey<FormState>();
-  String _email, _password = '';
+  String _email = '';
+  String _password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +41,7 @@ class LoginScreenState extends State<LoginScreen> {
           labelText: 'Email Address',
           hintText: 'ferdihaspin@gmail.com',
         ),
-        validator: (String value) {
-          if (!value.contains('@')) {
-            return 'Please enter a valid email';
-          } else {
-            return null;
-          }
-        },
+        validator: validateEmail,
         onSaved: (String value) {
           _email = value;
         },
@@ -62,13 +58,7 @@ class LoginScreenState extends State<LoginScreen> {
           labelText: 'Password',
           hintText: 'password',
         ),
-        validator: (String value) {
-          if (value.length < 4) {
-            return 'Password must be at least 4 characters';
-          } else {
-            return null;
-          }
-        },
+        validator: validatePassword,
         onSaved: (String value) {
           _password = value;
         },
